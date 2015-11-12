@@ -1,0 +1,44 @@
+syntax on
+set tabstop=2
+set number
+set t_Co=256i
+
+" Always open NERDTree
+autocmd VimEnter * NERDTree
+
+" Automatically change directories for NERDTree
+set autochdir
+let NERDTreeChDirMode=2
+nnoremap <leader>n :NERDTree .<CR>
+
+" If there's a file open, don't put the cursor in NERDTree
+if argc()
+	autocmd VimEnter * wincmd p
+endif
+
+autocmd Syntax gitcommit setlocal textwidth=0
+
+" .fountain filetype
+au BufRead,BufNewFile *.fountain	set filetype=fountain
+set nocompatible
+filetype off
+
+" Vundle!
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'fountain.vim'
+Plugin 'kien/ctrlp.vim'
+
+Bundle 'hybrid.vim'
+Bundle 'scrooloose/nerdtree'
+
+call vundle#end()
+filetype plugin indent on
+
+colorscheme hybrid
+set background=dark
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
