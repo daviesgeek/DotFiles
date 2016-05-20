@@ -12,6 +12,14 @@
 [alias]
   whatadded = log --diff-filter=A
   jedi = push --force
+  jedipull = "!f() { \
+    BRANCH=$(git rev-parse --abbrev-ref HEAD);\
+    REMOTE=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} | awk -F/ '{print $(NF-1)}');\
+    git checkout master;\
+    git branch -D $BRANCH;\
+    git fetch $REMOTE;\
+    git checkout $BRANCH;\
+   }; f"gst
 [filter "hawser"]
   clean = git hawser clean %f
   smudge = git hawser smudge %f
