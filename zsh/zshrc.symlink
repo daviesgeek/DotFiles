@@ -86,7 +86,7 @@ source $HOME/.zshenv
 export EDITOR='vim'
 
 # Homebrew
-export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
+export PATH="$(brew --prefix homebrew/php/php70)/bin:$PATH"
 
 # Composer
 export PATH=~/.composer/vendor/bin:$PATH
