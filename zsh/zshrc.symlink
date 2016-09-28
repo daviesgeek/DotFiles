@@ -108,3 +108,6 @@ export NVM_DIR="/Users/matthewdavies/.nvm"
 # Swift
 export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
 if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
+
+# Android
+export ANDROID_HOME=/usr/local/opt/android-sdk
