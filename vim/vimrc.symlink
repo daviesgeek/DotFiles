@@ -16,8 +16,6 @@ if argc()
 	autocmd VimEnter * wincmd p
 endif
 
-autocmd Syntax gitcommit setlocal textwidth=0
-
 " .fountain filetype
 au BufRead,BufNewFile *.fountain	set filetype=fountain
 set nocompatible
