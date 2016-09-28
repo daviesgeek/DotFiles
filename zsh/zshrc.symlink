@@ -76,11 +76,6 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
 # Add user local to path
 export PATH=/usr/local/bin:/usr/local/bin/bin/:$PATH
 
-# rbenv/ruby setup
-eval "$(rbenv init - zsh)"
-export PATH="~/.rbenv/shims:$PATH"
-export GEM_HOME=/usr/local/bin
-
 # Tmux stuff
 alias tmux="TERM=screen-256color-bce tmux"
 export TERM=xterm-256color
