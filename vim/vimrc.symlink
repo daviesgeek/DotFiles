@@ -3,8 +3,8 @@ set tabstop=2
 set number
 set t_Co=256i
 
-" Always open NERDTree
-autocmd VimEnter * NERDTree
+" Always open NERDTree, except for gitcommit files
+autocmd VimEnter * if argc() == 0 && &filetype !=# 'gitcommit' | NERDTree | endif
 
 " Automatically change directories for NERDTree
 set autochdir
