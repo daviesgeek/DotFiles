@@ -4,6 +4,7 @@ brew "mas"
 
 # CLI tools
 brew "age"
+brew "beads"
 brew "cloudflared"
 brew "coreutils"
 brew "ffmpeg"
@@ -15,7 +16,6 @@ brew "glab"
 brew "imagemagick"
 brew "jq"
 brew "mupdf-tools"
-brew "p7zip"
 brew "pandoc"
 brew "poppler"
 brew "qpdf"
@@ -105,6 +105,8 @@ cask "vlc"
 cask "xmind"
 cask "zed"
 cask "zoom"
+cask "free-ruler"
+cask "meetingbar"
 
 # Installed separately because no current public Homebrew cask was found.
 # YubiKey Manager is installed as a direct download.
@@ -116,13 +118,11 @@ mas "Bible Study", id: 472790630
 mas "Calca", id: 635758264
 mas "Diagrams", id: 1276248849
 mas "EchoHam", id: 873302145
-mas "Free Ruler", id: 1483172210
 mas "GarageBand", id: 682658836
 mas "HACK", id: 1464477788
 mas "iMovie", id: 408981434
 mas "Jira", id: 1475897096
 mas "Keynote", id: 409183694
-mas "MeetingBar", id: 1532419400
 mas "MeetInOne", id: 1542778639
 mas "Meshtastic", id: 1586432531
 mas "Numbers", id: 409203825
