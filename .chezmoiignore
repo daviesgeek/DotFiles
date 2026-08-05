@@ -7,17 +7,6 @@ CHEZMOI_MIGRATION_PLAN.md
 Brewfile
 plans
 
-# Legacy Holman-style dotfiles layout. These stay in the repo until the
-# chezmoi replacement is reviewed, but should not be applied to $HOME.
-bin
-git
-homebrew
-osx
-script
-tmux
-vim
-zsh
-
 # Generated, secret, or account-specific state that should never be managed.
 .ssh
 .gnupg

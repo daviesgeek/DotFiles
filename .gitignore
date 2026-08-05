@@ -1,1 +1,142 @@
-git/gitconfig.symlink
+# macOS noise
+.DS_Store
+
+# Secrets and machine/account-specific auth state
+.ssh/
+.gnupg/
+dot_ssh/
+private_dot_ssh/
+dot_gnupg/
+private_dot_gnupg/
+dot_config/gh/hosts.yml
+dot_config/gh/private_hosts.yml
+dot_config/hub
+dot_config/github-copilot/apps.json
+private_dot_config/github-copilot/apps.json
+dot_npmrc
+private_dot_npmrc
+dot_gh.json
+private_dot_gh.json
+dot_blackfire.ini
+private_dot_blackfire.ini
+dot_omnifocus-trello.yml
+private_dot_omnifocus-trello.yml
+dot_sqlectron.json
+private_dot_sqlectron.json
+dot_muttrc
+private_dot_muttrc
+dot_composer/auth.json
+private_dot_composer/auth.json
+dot_docker/config.json
+private_dot_docker/config.json
+dot_codex/auth.json
+private_dot_codex/auth.json
+dot_codex/installation_id
+private_dot_codex/installation_id
+dot_config/heroku/config.json
+private_dot_config/heroku/config.json
+dot_config/gatsby/config.json
+private_dot_config/gatsby/config.json
+dot_config/devcert/
+private_dot_config/devcert/
+dot_config/rnodeconf/trusted_keys/
+private_dot_config/rnodeconf/trusted_keys/
+dot_config/Transmission Remote GUI/transgui.ini
+private_dot_config/Transmission Remote GUI/transgui.ini
+dot_fly/config.yml
+private_dot_fly/config.yml
+dot_fly/state.yml
+private_dot_fly/state.yml
+dot_config/pianobar/config
+private_dot_config/pianobar/config
+dot_config/pianobar/state
+private_dot_config/pianobar/state
+dot_travis/config.yml
+private_dot_travis/config.yml
+dot_travis/travis.sh
+private_dot_travis/travis.sh
+dot_yarnrc
+private_dot_yarnrc
+dot_config/yarn/
+private_dot_config/yarn/
+dot_config/configstore/
+private_dot_config/configstore/
+dot_fastlane/.did_show_opt_info
+private_dot_fastlane/.did_show_opt_info
+dot_android/adbkey
+private_dot_android/adbkey
+dot_android/adbkey.pub
+private_dot_android/adbkey.pub
+dot_android/debug.keystore
+private_dot_android/debug.keystore
+dot_android/default.keyset
+private_dot_android/default.keyset
+dot_android/avd/
+private_dot_android/avd/
+dot_android/cache/
+private_dot_android/cache/
+dot_android/breakpad/
+private_dot_android/breakpad/
+dot_arduinoIDE/pluggable-monitor-settings.json
+private_dot_arduinoIDE/pluggable-monitor-settings.json
+dot_arduinoIDE/logs/
+private_dot_arduinoIDE/logs/
+
+# App support trees dominated by account, database, cookie, local-storage, or generated state
+private_Library/private_Application Support/private_Docker Desktop/
+private_Library/private_Application Support/private_Insomnia/
+private_Library/private_Application Support/private_Postman/
+private_Library/DBeaverData/
+private_Library/private_Application Support/obsidian/obsidian.json
+private_Library/private_Application Support/private_Notion/
+private_Library/private_Application Support/private_Notion Calendar/
+private_Library/private_Application Support/private_Notion Mail/
+private_Library/private_Application Support/Fastmail/
+private_Library/private_Application Support/Zed/extensions/
+private_Library/private_Application Support/private_GitHub Desktop/
+private_Library/private_Application Support/private_Dash/
+private_Library/private_Application Support/private_SourceTree/
+private_Library/private_Application Support/private_Transmit/
+private_Library/private_Application Support/private_ForkLift/Logs/
+private_Library/private_Application Support/Aegisub/autosave/
+private_Library/private_Application Support/Aegisub/ffms2cache/
+private_Library/private_Application Support/Aegisub/font_cache/
+private_Library/private_Application Support/Aegisub/log/
+private_Library/private_Application Support/Aegisub/mru.json
+private_Library/private_Application Support/audacity/audacity.cfg
+private_Library/private_Application Support/audacity/AutoSave/
+private_Library/private_Application Support/audacity/crashreports/
+private_Library/private_Application Support/audacity/lastlog.txt
+private_Library/private_Application Support/audacity/SessionData/
+private_Library/private_Application Support/audacity/pluginregistry.cfg
+private_Library/private_Application Support/audacity/plugins.cfg
+private_Library/private_Application Support/audacity/pluginsettings.cfg
+private_Library/private_Application Support/private_REAPER/reaper.ini
+private_Library/private_Application Support/private_REAPER/reaper-reginfo2.ini
+private_Library/private_Application Support/private_REAPER/reaper-vstplugins64.ini
+private_Library/private_Application Support/private_REAPER/reaper-install-rev.txt
+dot_vscode/argv.json
+private_dot_vscode/argv.json
+dot_cursor/argv.json
+private_dot_cursor/argv.json
+dot_antigravity/argv.json
+private_dot_antigravity/argv.json
+
+# Sublime user config should be curated if adopted, not copied wholesale
+private_Library/private_Application Support/private_Sublime Text 3/Packages/User/*conflicted copy*
+private_Library/private_Application Support/private_Sublime Text 3/Packages/User/*.last-run
+private_Library/private_Application Support/private_Sublime Text 3/Packages/User/*.merged-ca-bundle
+private_Library/private_Application Support/private_Sublime Text 3/Packages/User/Package Control.user-ca-bundle
+private_Library/private_Application Support/private_Sublime Text 3/Packages/User/sftp/
+
+# opencode generated, package, and account state
+dot_config/opencode/node_modules/
+dot_config/opencode/package.json
+dot_config/opencode/package-lock.json
+dot_config/opencode/bun.lock
+dot_config/opencode/openai-multi-account-*.json
+dot_config/opencode/opencode-notifier-state.json
+dot_config/opencode/agent/
+dot_config/opencode/commands/
+dot_config/opencode/plugins/
+dot_config/opencode/skills/

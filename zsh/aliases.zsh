@@ -1,1 +1,0 @@
-alias ka="killall"
