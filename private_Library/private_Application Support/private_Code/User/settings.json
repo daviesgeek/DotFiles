@@ -1,0 +1,66 @@
+{
+  "workbench.activityBar.location": "top",
+  "editor.accessibilitySupport": "off",
+  "workbench.startupEditor": "none",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "workbench.editor.empty.hint": "hidden",
+  "window.confirmBeforeClose": "always",
+  "cSpell.userWords": ["angularjs", "HIGHDPI"],
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
+  "lldb.launch.expressions": "native",
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[swift]": {
+    "editor.defaultFormatter": "vknabel.vscode-apple-swift-format",
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "circleci.hostUrl": "",
+  "claudeCode.environmentVariables": [],
+  "claudeCode.preferredLocation": "panel",
+  "workbench.secondarySideBar.defaultVisibility": "visible",
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar",
+  },
+  "json.schemaDownload.trustedDomains": {
+    "https://schemastore.azurewebsites.net/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://www.schemastore.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://json-schema.org/": true,
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://raw.githubusercontent.com/": true,
+    "https://opencode.ai/config.json": true,
+    "https://models.dev/model-schema.json": true,
+  },
+  "workbench.colorTheme": "Dark+",
+  "chat.viewSessions.orientation": "stacked",
+  "gitlens.rebaseEditor.openOnPausedRebase": false,
+  "git.blame.editorDecoration.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+}

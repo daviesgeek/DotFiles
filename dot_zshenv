@@ -1,0 +1,5 @@
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+
+# uv and other user-local tools
+export PATH="$HOME/.local/bin:$PATH"

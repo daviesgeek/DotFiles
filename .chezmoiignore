@@ -1,0 +1,123 @@
+# Keep repository metadata and migration docs out of the target home directory.
+.git
+.gitignore
+.DS_Store
+README.md
+CHEZMOI_MIGRATION_PLAN.md
+Brewfile
+plans
+
+# Legacy Holman-style dotfiles layout. These stay in the repo until the
+# chezmoi replacement is reviewed, but should not be applied to $HOME.
+bin
+git
+homebrew
+osx
+script
+tmux
+vim
+zsh
+
+# Generated, secret, or account-specific state that should never be managed.
+.ssh
+.gnupg
+.npmrc
+.gh.json
+.blackfire.ini
+.omnifocus-trello.yml
+.sqlectron.json
+.muttrc
+.netrc
+.dockercfg
+.emulator_console_auth_token
+.config/gh/hosts.yml
+.config/hub
+.config/github-copilot/apps.json
+.composer/auth.json
+.docker/config.json
+.docker/.token_seed
+.codex/auth.json
+.codex/installation_id
+.codex/goals_*.sqlite
+.codex/logs_*.sqlite*
+.codex/memories_*.sqlite
+.codex/state_*.sqlite
+.config/heroku/config.json
+.config/gatsby/config.json
+.config/devcert
+.config/rnodeconf/trusted_keys
+.config/Transmission Remote GUI/transgui.ini
+.fly/config.yml
+.fly/state.yml
+.config/pianobar/config
+.config/pianobar/state
+.travis/config.yml
+.travis/travis.sh
+.yarnrc
+.config/yarn
+.config/configstore
+.fastlane/.did_show_opt_info
+.android/adbkey
+.android/adbkey.pub
+.android/debug.keystore
+.android/default.keyset
+.android/avd
+.android/cache
+.android/breakpad
+.arduinoIDE/pluggable-monitor-settings.json
+.arduinoIDE/logs
+.config/opencode/node_modules
+.config/opencode/package.json
+.config/opencode/package-lock.json
+.config/opencode/bun.lock
+.config/opencode/openai-multi-account-accounts.json
+.config/opencode/openai-multi-account-claims.json
+.config/opencode/opencode-notifier-state.json
+.config/opencode/agent
+.config/opencode/commands
+.config/opencode/plugins
+.config/opencode/skills
+
+# App support trees dominated by account, database, cookie, local-storage, or generated state.
+Library/Application Support/Docker Desktop
+Library/Application Support/Insomnia
+Library/Application Support/Postman
+Library/DBeaverData
+Library/Application Support/obsidian/obsidian.json
+Library/Application Support/Notion
+Library/Application Support/Notion Calendar
+Library/Application Support/Notion Mail
+Library/Application Support/Fastmail
+Library/Application Support/Zed/extensions
+Library/Application Support/GitHub Desktop
+Library/Application Support/Dash
+Library/Application Support/SourceTree
+Library/Application Support/Transmit
+Library/Application Support/ForkLift/Logs
+Library/Application Support/Aegisub/autosave
+Library/Application Support/Aegisub/ffms2cache
+Library/Application Support/Aegisub/font_cache
+Library/Application Support/Aegisub/log
+Library/Application Support/Aegisub/mru.json
+Library/Application Support/audacity/audacity.cfg
+Library/Application Support/audacity/AutoSave
+Library/Application Support/audacity/crashreports
+Library/Application Support/audacity/lastlog.txt
+Library/Application Support/audacity/SessionData
+Library/Application Support/audacity/pluginregistry.cfg
+Library/Application Support/audacity/plugins.cfg
+Library/Application Support/audacity/pluginsettings.cfg
+Library/Application Support/REAPER/reaper.ini
+Library/Application Support/REAPER/reaper-reginfo2.ini
+Library/Application Support/REAPER/reaper-vstplugins64.ini
+Library/Application Support/REAPER/reaper-install-rev.txt
+.vscode/argv.json
+.cursor/argv.json
+.antigravity/argv.json
+
+# Sublime user config should be curated if adopted, not copied wholesale.
+Library/Application Support/Sublime Text 3/Packages/User/*conflicted copy*
+Library/Application Support/Sublime Text 3/Packages/User/*.last-run
+Library/Application Support/Sublime Text 3/Packages/User/*.merged-ca-bundle
+Library/Application Support/Sublime Text 3/Packages/User/Package Control.user-ca-bundle
+Library/Application Support/Sublime Text 3/Packages/User/sftp

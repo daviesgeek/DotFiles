@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$(uname -s)" != "Darwin" ]; then
+  exit 0
+fi
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew is required before running brew bundle" >&2
+  exit 1
+fi
+
+brewfile="{{ .chezmoi.sourceDir }}/Brewfile"
+
+if [ ! -f "$brewfile" ]; then
+  echo "Brewfile not found: $brewfile" >&2
+  exit 1
+fi
+
+if brew bundle check --no-upgrade --file "$brewfile"; then
+  exit 0
+fi
+
+if [ "${RUN_BREW_BUNDLE:-0}" != "1" ]; then
+  echo "brew bundle has unmet dependencies. Re-run with RUN_BREW_BUNDLE=1 to install them:"
+  echo "  RUN_BREW_BUNDLE=1 chezmoi apply"
+  exit 0
+fi
+
+brew bundle install --file "$brewfile" --no-upgrade

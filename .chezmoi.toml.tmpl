@@ -1,0 +1,17 @@
+{{- $profiles := list "personal" "work" -}}
+{{- $profile := promptChoiceOnce . "profile" "Machine profile" $profiles "personal" -}}
+{{- $gpgProgram := lookPath "gpg" -}}
+sourceDir = "~/Code/dotfiles"
+
+[data]
+  profile = {{ $profile | quote }}
+  name = {{ promptStringOnce . "name" "Git author name" "Matthew Davies" | quote }}
+  personalEmail = {{ promptStringOnce . "personalEmail" "Personal Git email" "" | quote }}
+  textExpansionEmail = {{ promptStringOnce . "textExpansionEmail" "Text expansion email" "" | quote }}
+  workEmail = {{ promptStringOnce . "workEmail" "Work Git email (leave blank if unused)" "" | quote }}
+  personalSigningKey = {{ promptStringOnce . "personalSigningKey" "Personal Git signing key (leave blank if unused)" "4B0314C2EFD91AC7" | quote }}
+  workSigningKey = {{ promptStringOnce . "workSigningKey" "Work Git signing key (leave blank if unused)" "" | quote }}
+  useGpgSigning = true
+  gpgProgram = {{ promptStringOnce . "gpgProgram" "GPG executable path (leave blank to disable explicit path)" $gpgProgram | quote }}
+  enableAndroid = true
+  enableXcode = true

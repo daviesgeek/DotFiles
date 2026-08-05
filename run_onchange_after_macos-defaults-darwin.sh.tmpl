@@ -1,0 +1,266 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$(uname -s)" != "Darwin" ]; then
+  exit 0
+fi
+
+# Keyboard and input
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# Text replacements. Merge custom entries so Apple's built-in replacements remain unmanaged.
+add_text_replacement() (
+  local shortcut="$1"
+  local replacement="$2"
+  local entry="$3"
+  local count
+  local existing
+  local existing_on
+  local existing_replacement
+  local plist
+  local i
+
+  plist="$(mktemp)"
+  trap 'rm -f "$plist"' EXIT
+  if ! defaults export NSGlobalDomain "$plist" 2>/dev/null; then
+    rm -f "$plist"
+    echo "Could not export global preferences." >&2
+    return 1
+  fi
+
+  if plutil -type NSUserDictionaryReplacementItems "$plist" >/dev/null 2>&1; then
+    if [ "$(plutil -type NSUserDictionaryReplacementItems "$plist")" != "array" ]; then
+      rm -f "$plist"
+      echo "NSUserDictionaryReplacementItems is not an array." >&2
+      return 1
+    fi
+    count="$(plutil -extract NSUserDictionaryReplacementItems raw -o - "$plist")"
+  else
+    count=0
+  fi
+
+  if ! [[ "$count" =~ ^[0-9]+$ ]]; then
+    rm -f "$plist"
+    echo "Invalid text replacement count: $count" >&2
+    return 1
+  fi
+
+  for ((i = 0; i < count; i++)); do
+    existing="$(plutil -extract "NSUserDictionaryReplacementItems.$i.replace" raw -o - "$plist" 2>/dev/null || true)"
+    if [ "$existing" = "$shortcut" ]; then
+      existing_replacement="$(plutil -extract "NSUserDictionaryReplacementItems.$i.with" raw -o - "$plist" 2>/dev/null || true)"
+      existing_on="$(plutil -extract "NSUserDictionaryReplacementItems.$i.on" raw -o - "$plist" 2>/dev/null || true)"
+      rm -f "$plist"
+
+      if [ "$existing_replacement" = "$replacement" ] && { [ "$existing_on" = "1" ] || [ "$existing_on" = "true" ]; }; then
+        return
+      fi
+
+      echo "Text replacement '$shortcut' exists with a different value." >&2
+      return 1
+    fi
+  done
+
+  rm -f "$plist"
+  defaults write NSGlobalDomain NSUserDictionaryReplacementItems -array-add "$entry"
+)
+
+add_text_replacement "fp" "(ლ‸－)" '{ on = 1; replace = "fp"; with = "(ლ‸－)"; }'
+add_text_replacement "fp2" "(－‸ლ)" '{ on = 1; replace = "fp2"; with = "(－‸ლ)"; }'
+add_text_replacement ":ohwell:" '¯\_(ツ)_/¯' '{ on = 1; replace = ":ohwell:"; with = "¯\\_(ツ)_/¯"; }'
+add_text_replacement "@@" "{{ .textExpansionEmail }}" '{ on = 1; replace = "@@"; with = "{{ .textExpansionEmail }}"; }'
+
+# Appearance and regional settings
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+defaults write NSGlobalDomain AppleMenuBarFontSize -string "large"
+defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
+defaults write com.apple.menuextra.clock Show24Hour -bool true
+defaults write com.apple.menuextra.clock ShowSeconds -bool true
+
+# Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+defaults write com.apple.finder AppleShowAllFiles -bool true
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowStatusBar -bool true
+defaults write com.apple.finder ShowTabView -bool true
+
+# Screenshots
+defaults write com.apple.screencapture showsClicks -bool true
+
+# Dock
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock orientation -string "right"
+defaults write com.apple.dock showhidden -bool true
+defaults write com.apple.dock tilesize -float 52
+defaults write com.apple.dock wvous-br-corner -int 4
+
+# Window management
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false
+defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false
+
+# Trackpad
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad Dragging -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Dragging -bool true
+
+# Keyboard shortcuts
+disable_symbolic_hotkeys() (
+  local enabled_type
+  local entry_type
+  local plist
+  local id
+
+  plist="$(mktemp)"
+  trap 'rm -f "$plist"' EXIT
+  if ! defaults export com.apple.symbolichotkeys "$plist" 2>/dev/null; then
+    echo "Could not export symbolic hotkey preferences." >&2
+    return 1
+  fi
+
+  if [ "$(plutil -type AppleSymbolicHotKeys "$plist" 2>/dev/null || true)" != "dictionary" ]; then
+    if plutil -type AppleSymbolicHotKeys "$plist" >/dev/null 2>&1; then
+      rm -f "$plist"
+      echo "AppleSymbolicHotKeys is not a dictionary." >&2
+      return 1
+    fi
+    plutil -insert AppleSymbolicHotKeys -dictionary "$plist"
+  fi
+
+  for id in 28 64 65; do
+    entry_type="$(plutil -type "AppleSymbolicHotKeys.$id" "$plist" 2>/dev/null || true)"
+    if [ -z "$entry_type" ]; then
+      plutil -insert "AppleSymbolicHotKeys.$id" -dictionary "$plist"
+    elif [ "$entry_type" != "dictionary" ]; then
+      rm -f "$plist"
+      echo "Symbolic hotkey $id is not a dictionary." >&2
+      return 1
+    fi
+
+    enabled_type="$(plutil -type "AppleSymbolicHotKeys.$id.enabled" "$plist" 2>/dev/null || true)"
+    if [ -z "$enabled_type" ]; then
+      plutil -insert "AppleSymbolicHotKeys.$id.enabled" -bool false "$plist"
+    elif [ "$enabled_type" = "bool" ]; then
+      plutil -replace "AppleSymbolicHotKeys.$id.enabled" -bool false "$plist"
+    else
+      rm -f "$plist"
+      echo "Symbolic hotkey $id enabled state is not a boolean." >&2
+      return 1
+    fi
+  done
+
+  if ! defaults import com.apple.symbolichotkeys "$plist"; then
+    return 1
+  fi
+)
+
+disable_symbolic_hotkeys
+
+# Accessibility
+set_accessibility_bool() {
+  local key="$1"
+
+  if [ "$(defaults read com.apple.universalaccess "$key" 2>/dev/null || true)" = "1" ]; then
+    return
+  fi
+
+  defaults write com.apple.universalaccess "$key" -bool true 2>/dev/null || true
+  if [ "$(defaults read com.apple.universalaccess "$key" 2>/dev/null || true)" != "1" ]; then
+    echo "Warning: macOS rejected the Accessibility setting '$key'; configure it in System Settings." >&2
+  fi
+}
+
+set_accessibility_bool closeViewScrollWheelToggle
+set_accessibility_bool closeViewZoomFollowsFocus
+
+# Built-in apps
+defaults write com.apple.ActivityMonitor UpdatePeriod -int 1
+defaults write com.apple.iCal "Show Week Numbers" -bool true
+defaults write com.apple.Safari.SandboxBroker ShowDevelopMenu -bool true
+defaults write com.apple.Terminal SecureKeyboardEntry -bool true
+
+rectangle_was_running=0
+alttab_was_running=0
+
+restore_stopped_apps() {
+  if [ "$rectangle_was_running" -eq 1 ]; then
+    open -gj -a Rectangle >/dev/null 2>&1 || true
+  fi
+  if [ "$alttab_was_running" -eq 1 ]; then
+    open -a AltTab >/dev/null 2>&1 || true
+  fi
+}
+
+trap restore_stopped_apps EXIT
+
+stop_app() {
+  local process="$1"
+  local i
+
+  if ! pgrep -x -u "$UID" "$process" >/dev/null; then
+    return
+  fi
+
+  if ! pkill -TERM -x -u "$UID" "$process" && pgrep -x -u "$UID" "$process" >/dev/null; then
+    echo "Could not terminate $process." >&2
+    return 1
+  fi
+  for ((i = 0; i < 50; i++)); do
+    if ! pgrep -x -u "$UID" "$process" >/dev/null; then
+      return
+    fi
+    sleep 0.1
+  done
+
+  echo "$process did not terminate." >&2
+  return 1
+}
+
+if pgrep -x -u "$UID" Rectangle >/dev/null; then
+  rectangle_was_running=1
+  stop_app Rectangle
+fi
+
+if pgrep -x -u "$UID" AltTab >/dev/null; then
+  alttab_was_running=1
+  stop_app AltTab
+fi
+
+# Rectangle
+defaults write com.knollsoft.Rectangle hideMenubarIcon -bool true
+defaults write com.knollsoft.Rectangle launchOnLogin -bool true
+
+# AltTab
+defaults write com.lwouis.alt-tab-macos appearanceSize -string "1"
+defaults write com.lwouis.alt-tab-macos startAtLogin -string "false"
+
+alt_tab_launch_agent="$HOME/Library/LaunchAgents/com.lwouis.alt-tab-macos.plist"
+if [ -f "$alt_tab_launch_agent" ]; then
+  launchctl bootout "gui/$UID" "$alt_tab_launch_agent" 2>/dev/null || true
+  rm -f "$alt_tab_launch_agent"
+fi
+
+# Restart affected apps. Ignore failures if they are not running.
+killall Finder 2>/dev/null || true
+killall Dock 2>/dev/null || true
+killall SystemUIServer 2>/dev/null || true
+
+open -gj -a Rectangle
+rectangle_was_running=0
+
+if [ "$alttab_was_running" -eq 1 ]; then
+  open -a AltTab
+  alttab_was_running=0
+fi
+
+trap - EXIT
+
+echo "Rectangle was launched to reconcile its login-item setting."
+echo "Log out and back in to apply the menu-bar font-size change."

@@ -1,0 +1,13 @@
+{{- if .enableAndroid }}
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+{{- end }}
+
+{{- if .enableXcode }}
+if [ -x "/usr/libexec/java_home" ]; then
+  JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null || true)"
+  if [ -n "$JAVA_HOME" ]; then
+    export JAVA_HOME
+  fi
+fi
+{{- end }}

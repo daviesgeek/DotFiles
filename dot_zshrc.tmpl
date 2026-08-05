@@ -1,0 +1,88 @@
+# Oh My Zsh
+export ZSH_DISABLE_COMPFIX=true
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="alanpeabody"
+plugins=(git)
+
+if [ -r "$ZSH/oh-my-zsh.sh" ]; then
+  source "$ZSH/oh-my-zsh.sh"
+fi
+
+# User configuration
+export LANG=en_US.UTF-8
+export EDITOR="vim"
+
+# Homebrew
+HOMEBREW_PREFIX=""
+for brew_binary in "$HOME/.homebrew/bin/brew" "/opt/homebrew/bin/brew" "/usr/local/bin/brew"; do
+  if [ -x "$brew_binary" ]; then
+    HOMEBREW_PREFIX="$("$brew_binary" --prefix 2>/dev/null || true)"
+    if [ -n "$HOMEBREW_PREFIX" ]; then
+      break
+    fi
+  fi
+done
+
+if [ -z "$HOMEBREW_PREFIX" ] && command -v brew >/dev/null 2>&1; then
+  HOMEBREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
+fi
+
+if [ -z "$HOMEBREW_PREFIX" ]; then
+  HOMEBREW_PREFIX="/usr/local"
+fi
+
+export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
+
+# User-local tools
+export PATH="$HOME/.local/bin:$HOME/.docker/bin:$PATH"
+
+# Go
+if [ -d "$HOMEBREW_PREFIX/opt/go/libexec/bin" ]; then
+  export PATH="$PATH:$HOMEBREW_PREFIX/opt/go/libexec/bin"
+fi
+export GOPATH="$HOME/Code/go"
+
+# Gitignore.io helper
+function gi() { curl -L -s "https://www.gitignore.io/api/$@"; }
+
+{{- if .enableXcode }}
+# Swift / Xcode
+if [ -d "/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin" ]; then
+  export PATH="/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH"
+fi
+
+if command -v swiftenv >/dev/null 2>&1; then
+  eval "$(swiftenv init -)"
+fi
+{{- end }}
+
+# Ruby
+if [ -d "$HOME/.rbenv/bin" ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+fi
+
+if command -v rbenv >/dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
+
+# asdf
+if [ -d "$HOME/.asdf" ]; then
+  export ASDF_DIR="$HOME/.asdf"
+  [ -r "$HOME/.asdf/asdf.sh" ] && source "$HOME/.asdf/asdf.sh"
+  [ -r "$HOME/.asdf/completions/asdf.bash" ] && source "$HOME/.asdf/completions/asdf.bash"
+  export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
+fi
+
+# Antigravity
+if [ -d "$HOME/.antigravity/antigravity/bin" ]; then
+  export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+fi
+
+{{- if .enableAndroid }}
+# Android Studio
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+if [ -d "$ANDROID_HOME" ]; then
+  export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH"
+fi
+{{- end }}
