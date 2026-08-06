@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+{{- if and .textExpansionEmail (not (regexMatch `^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$` .textExpansionEmail)) }}
+{{ fail "textExpansionEmail must be a simple email address" }}
+{{- end }}
+
 if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
 fi
@@ -71,7 +75,9 @@ add_text_replacement() (
 add_text_replacement "fp" "(ლ‸－)" '{ on = 1; replace = "fp"; with = "(ლ‸－)"; }'
 add_text_replacement "fp2" "(－‸ლ)" '{ on = 1; replace = "fp2"; with = "(－‸ლ)"; }'
 add_text_replacement ":ohwell:" '¯\_(ツ)_/¯' '{ on = 1; replace = ":ohwell:"; with = "¯\\_(ツ)_/¯"; }'
+{{- if .textExpansionEmail }}
 add_text_replacement "@@" "{{ .textExpansionEmail }}" '{ on = 1; replace = "@@"; with = "{{ .textExpansionEmail }}"; }'
+{{- end }}
 
 # Appearance and regional settings
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true

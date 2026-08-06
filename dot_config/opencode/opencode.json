@@ -16,6 +16,6 @@
     }
   },
   "plugin": [
-    "opencode-codex-multi-account@latest"
+    "opencode-codex-multi-account@0.2.110"
   ]
 }

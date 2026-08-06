@@ -6,7 +6,19 @@ if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
 fi
 
-if ! command -v brew >/dev/null 2>&1; then
+brew_binary=""
+for candidate in "$HOME/.homebrew/bin/brew" "/opt/homebrew/bin/brew" "/usr/local/bin/brew"; do
+  if [ -x "$candidate" ]; then
+    brew_binary="$candidate"
+    break
+  fi
+done
+
+if [ -z "$brew_binary" ] && command -v brew >/dev/null 2>&1; then
+  brew_binary="$(command -v brew)"
+fi
+
+if [ -z "$brew_binary" ]; then
   echo "Homebrew is required before running brew bundle" >&2
   exit 1
 fi
@@ -18,8 +30,8 @@ if [ ! -f "$brewfile" ]; then
   exit 1
 fi
 
-if brew bundle check --no-upgrade --file "$brewfile"; then
+if "$brew_binary" bundle check --no-upgrade --file "$brewfile"; then
   exit 0
 fi
 
-brew bundle install --file "$brewfile" --no-upgrade
+"$brew_binary" bundle install --file "$brewfile" --no-upgrade

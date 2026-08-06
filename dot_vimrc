@@ -8,12 +8,14 @@ set number
 set t_Co=256i
 
 " Always open NERDTree
-autocmd VimEnter * if argc() == 0 && &filetype !=# 'gitcommit' | NERDTree | endif
+autocmd VimEnter * if argc() == 0 && &filetype !=# 'gitcommit' && exists(':NERDTree') == 2 | NERDTree | endif
 
 " Automatically change directories for NERDTree
 set autochdir
 let NERDTreeChDirMode=2
-nnoremap <leader>n :NERDTree .<CR>
+if exists(':NERDTree') == 2
+  nnoremap <leader>n :NERDTree .<CR>
+endif
 
 " If there's a file open, don't put the cursor in NERDTree
 if argc()
@@ -25,22 +27,26 @@ au BufRead,BufNewFile *.fountain	set filetype=fountain
 set nocompatible
 filetype off
 
-" Vundle!
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Vundle, when installed.
+if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'fountain.vim'
-Plugin 'kien/ctrlp.vim'
+  Plugin 'gmarik/Vundle.vim'
+  Plugin 'airblade/vim-gitgutter'
+  Plugin 'fountain.vim'
+  Plugin 'kien/ctrlp.vim'
 
-Bundle 'hybrid.vim'
-Bundle 'scrooloose/nerdtree'
+  Bundle 'hybrid.vim'
+  Bundle 'scrooloose/nerdtree'
 
-call vundle#end()
-filetype plugin indent on
+  call vundle#end()
+  filetype plugin indent on
+endif
 
-colorscheme hybrid
+if filereadable(expand('~/.vim/bundle/hybrid.vim/colors/hybrid.vim'))
+  colorscheme hybrid
+endif
 set background=dark
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif

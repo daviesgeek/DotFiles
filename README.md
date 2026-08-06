@@ -23,8 +23,12 @@ chezmoi diff
 chezmoi apply
 ```
 
-The first apply can install Homebrew and Oh My Zsh when they are missing. It
-does not install the complete Brewfile unless explicitly requested.
+The first apply can install Homebrew, Oh My Zsh, and missing Brewfile
+dependencies. It does not upgrade already-installed packages. Sign in to the
+Mac App Store before applying if you want the `mas` entries installed.
+
+GPG signing is opt-in during setup. If enabled, import the selected private
+key before committing.
 
 ## Homebrew
 
@@ -35,10 +39,11 @@ brew bundle check --verbose --no-upgrade \
   --file "$HOME/Code/dotfiles/Brewfile"
 ```
 
-Install or upgrade the declared formulae, casks, and Mac App Store apps:
+Install missing declared formulae, casks, and Mac App Store apps without
+upgrading existing packages:
 
 ```sh
-brew bundle install --file "$HOME/Code/dotfiles/Brewfile"
+brew bundle install --no-upgrade --file "$HOME/Code/dotfiles/Brewfile"
 ```
 
 Existing direct-download applications may need one-by-one adoption:
@@ -83,6 +88,9 @@ including Git and text-expansion email values, are stored in the local
 
 Authenticate tools such as `gh`, `glab`, Docker, npm, and cloud CLIs
 separately after setup.
+
+Vim plugins and asdf language versions are intentionally not downloaded by
+chezmoi; install those separately if you use them.
 
 ## Troubleshooting
 

@@ -1,17 +1,24 @@
 {{- $profiles := list "personal" "work" -}}
 {{- $profile := promptChoiceOnce . "profile" "Machine profile" $profiles "personal" -}}
 {{- $gpgProgram := lookPath "gpg" -}}
+{{- $name := promptStringOnce . "name" "Git author name" "Matthew Davies" -}}
+{{- $personalEmail := promptStringOnce . "personalEmail" "Personal Git email" "" -}}
+{{- $textExpansionEmail := promptStringOnce . "textExpansionEmail" "Text expansion email" "" -}}
+{{- $workEmail := promptStringOnce . "workEmail" "Work Git email (leave blank if unused)" "" -}}
+{{- if or (and $personalEmail (not (regexMatch `^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$` $personalEmail))) (and $textExpansionEmail (not (regexMatch `^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$` $textExpansionEmail))) (and $workEmail (not (regexMatch `^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$` $workEmail))) -}}
+{{ fail "email values must be simple email addresses" }}
+{{- end }}
 sourceDir = "~/Code/dotfiles"
 
 [data]
   profile = {{ $profile | quote }}
-  name = {{ promptStringOnce . "name" "Git author name" "Matthew Davies" | quote }}
-  personalEmail = {{ promptStringOnce . "personalEmail" "Personal Git email" "" | quote }}
-  textExpansionEmail = {{ promptStringOnce . "textExpansionEmail" "Text expansion email" "" | quote }}
-  workEmail = {{ promptStringOnce . "workEmail" "Work Git email (leave blank if unused)" "" | quote }}
+  name = {{ $name | quote }}
+  personalEmail = {{ $personalEmail | quote }}
+  textExpansionEmail = {{ $textExpansionEmail | quote }}
+  workEmail = {{ $workEmail | quote }}
   personalSigningKey = {{ promptStringOnce . "personalSigningKey" "Personal Git signing key (leave blank if unused)" "4B0314C2EFD91AC7" | quote }}
   workSigningKey = {{ promptStringOnce . "workSigningKey" "Work Git signing key (leave blank if unused)" "" | quote }}
-  useGpgSigning = true
+  useGpgSigning = {{ promptBoolOnce . "useGpgSigning" "Enable GPG commit signing" false }}
   gpgProgram = {{ promptStringOnce . "gpgProgram" "GPG executable path (leave blank to disable explicit path)" $gpgProgram | quote }}
   enableAndroid = true
   enableXcode = true

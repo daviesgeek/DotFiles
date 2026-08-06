@@ -5,43 +5,28 @@
 {{- $signingKey = .workSigningKey -}}
 {{- end -}}
 [user]
-	name = {{ .name }}
-	email = {{ $email }}
+	name = {{ .name | quote }}
+	email = {{ $email | quote }}
 {{- if $signingKey }}
-	signingkey = {{ $signingKey }}
+	signingkey = {{ $signingKey | quote }}
 {{- end }}
-[filter "media"]
-  required = true
-  clean = git media clean %f
-  smudge = git media smudge %f
 [push]
   default = current
 [alias]
   whatadded = log --diff-filter=A
   jedi = push --force-with-lease
-  jedipull = "!f() { \
-    BRANCH=$(git rev-parse --abbrev-ref HEAD);\
-    REMOTE=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} | awk -F/ '{print $(NF-1)}');\
-    git checkout master;\
-    git branch -D $BRANCH;\
-    git fetch $REMOTE;\
-    git checkout $BRANCH;\
-   }; f"
-[filter "hawser"]
-  clean = git hawser clean %f
-  smudge = git hawser smudge %f
-  required = true
+  jedipull = pull --rebase --autostash
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-{{- if .useGpgSigning }}
+{{- if and .useGpgSigning $signingKey }}
 [commit]
 	gpgsign = true
 {{- if .gpgProgram }}
 [gpg]
-	program = {{ .gpgProgram }}
+	program = {{ .gpgProgram | quote }}
 {{- end }}
 [pinentry]
 	mode = loopback

@@ -140,3 +140,21 @@ dot_config/opencode/agent/
 dot_config/opencode/commands/
 dot_config/opencode/plugins/
 dot_config/opencode/skills/
+
+# Additional secret and security state
+dot_netrc
+private_dot_netrc
+dot_dockercfg
+private_dot_dockercfg
+dot_emulator_console_auth_token
+private_dot_emulator_console_auth_token
+dot_docker/.token_seed
+private_dot_docker/.token_seed
+dot_config/sops/age/
+private_dot_config/sops/age/
+dot_swiftpm/security/
+private_dot_swiftpm/security/
+dot_codex/*.sqlite*
+private_dot_codex/*.sqlite*
+dot_codex/logs_*.sqlite*
+private_dot_codex/logs_*.sqlite*
