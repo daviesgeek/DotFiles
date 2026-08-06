@@ -29,6 +29,8 @@ brew "uv"
 brew "watchman"
 brew "yt-dlp"
 brew "zsh"
+tap "anomalyco/tap"
+brew "anomalyco/tap/opencode"
 
 # Language and build tooling
 brew "carthage"

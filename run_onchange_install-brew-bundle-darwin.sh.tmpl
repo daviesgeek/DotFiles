@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# Brewfile checksum: {{ include "Brewfile" | sha256sum }}
 
 if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
@@ -18,12 +19,6 @@ if [ ! -f "$brewfile" ]; then
 fi
 
 if brew bundle check --no-upgrade --file "$brewfile"; then
-  exit 0
-fi
-
-if [ "${RUN_BREW_BUNDLE:-0}" != "1" ]; then
-  echo "brew bundle has unmet dependencies. Re-run with RUN_BREW_BUNDLE=1 to install them:"
-  echo "  RUN_BREW_BUNDLE=1 chezmoi apply"
   exit 0
 fi
 
