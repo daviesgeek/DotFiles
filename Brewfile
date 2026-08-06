@@ -34,7 +34,6 @@ brew "yt-dlp"
 brew "zsh"
 tap "anomalyco/tap"
 brew "anomalyco/tap/opencode"
-brew "pake"
 tap "macos-fuse-t/cask"
 
 # Language and build tooling
